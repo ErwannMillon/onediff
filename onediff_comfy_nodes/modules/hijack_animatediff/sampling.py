@@ -29,13 +29,13 @@ def groupnorm_mm_factory(params):
     return groupnorm_mm_forward
 
 
-# ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/animatediff/motion_utils.py
-GroupNormAD_OF_CLS = animatediff_of.animatediff.motion_utils.GroupNormAD
+# ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/animatediff/utils_motion.py
+GroupNormAD_OF_CLS = animatediff_of.animatediff.utils_motion.GroupNormAD
 # ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/animatediff/motion_module_ad.py
 AnimateDiffVersion = animatediff_pt.animatediff.motion_module_ad.AnimateDiffVersion
 AnimateDiffFormat = animatediff_pt.animatediff.motion_module_ad.AnimateDiffFormat
-# ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/animatediff/model_utils.py
-ModelTypeSD = animatediff_pt.animatediff.model_utils.ModelTypeSD
+# ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/animatediff/utils_model.py
+ModelTypeSD = animatediff_pt.animatediff.utils_model.ModelTypeSD
 
 _HANDLES = []
 
