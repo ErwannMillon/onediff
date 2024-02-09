@@ -27,6 +27,29 @@ def is_need_mock(cls) -> bool:
         return False
     return True
 
+def load_custom_node(module_path, ignore=set()):
+    module_name = os.path.basename(module_path)
+    if os.path.isfile(module_path):
+        sp = os.path.splitext(module_path)
+        module_name = sp[0]
+    try:
+        if os.path.isfile(module_path):
+            module_spec = importlib.util.spec_from_file_location(module_name, module_path)
+            module_dir = os.path.split(module_path)[0]
+        else:
+            module_spec = importlib.util.spec_from_file_location(module_name, os.path.join(module_path, "__init__.py"))
+            module_dir = module_path
+
+        module = importlib.util.module_from_spec(module_spec)
+        sys.modules[module_name] = module
+        return module
+        # module_spec.loader.exec_module(module)
+
+    except Exception as e:
+        import traceback
+        print(traceback.format_exc())
+        print(f"Cannot import {module_path} module for custom nodes:", e)
+        return False
 
 class DynamicModuleLoader(ModuleType):
     def __init__(self, obj_entity: ModuleType, pkg_root=None, module_path=None):
@@ -37,7 +60,11 @@ class DynamicModuleLoader(ModuleType):
     @classmethod
     def from_path(cls, module_path: str):
         model_name = os.path.basename(module_path)
-        module = importlib.import_module(model_name)
+        if "animate" in module_path.lower():
+            print('custom loading')
+            module = load_custom_node(module_path)
+        else:
+            module = importlib.import_module(model_name)
         return cls(module, module_path, module_path)
 
     def __getattr__(self, name):
